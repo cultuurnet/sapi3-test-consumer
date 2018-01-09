@@ -1,0 +1,11 @@
+index:
+    path: /
+    controller: TestConsumer\Controller\DefaultController::index
+    defaults:
+      _format: 'html'
+
+search_query:
+    path: /search-query
+    controller: TestConsumer\Controller\DefaultController::queryForm
+    defaults:
+      _format: 'html'
