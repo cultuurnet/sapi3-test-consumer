@@ -18,8 +18,14 @@ use TestConsumer\Form\DataTransformer\PostalCodeParameterTransformer;
 use TestConsumer\Form\DataTransformer\MinAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\MaxAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\AudienceTypeParameterTransformer;
+use TestConsumer\Form\DataTransformer\CalendarTypeParameterTransformer;
+
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
+use TestConsumer\Form\DataTransformer\CreatedFromParameterTransformer;
+use TestConsumer\Form\DataTransformer\CreatedToParameterTransformer;
+use TestConsumer\Form\DataTransformer\ModifiedFromParameterTransformer;
+use TestConsumer\Form\DataTransformer\ModifiedToParameterTransformer;
 
 class QueryForm extends AbstractType
 {
@@ -30,9 +36,14 @@ class QueryForm extends AbstractType
     private $audienceTypeTransformer;
     private $dateFromTypeTransformer;
     private $dateToTypeTransformer;
+    private $calendarTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
+    private $createdFromTypeTransformer;
+    private $createdToTypeTransformer;
+    private $modifiedFromTypeTransformer;
+    private $modifiedToTypeTransformer;
 
     public function __construct(AddressCountryParameterTransformer $addressCountryTransformer,
         PostalCodeParameterTransformer $postalCodeTransformer,
@@ -41,8 +52,13 @@ class QueryForm extends AbstractType
         AudienceTypeParameterTransformer $audienceTypeParameterTransformer,
         DateFromParameterTransformer $dateFromParameterTransformer,
         DateToParameterTransformer $dateToParameterTransformer,
+        CalendarTypeParameterTransformer $calendarParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
-        AvailableToParameterTransformer $availableToParameterTransformer)
+        AvailableToParameterTransformer $availableToParameterTransformer,
+        CreatedFromParameterTransformer $createdFromParameterTransformer,
+        CreatedToParameterTransformer $createdToParameterTransformer,
+        ModifiedFromParameterTransformer $modifiedFromParameterTransformer,
+        ModifiedToParameterTransformer $modifiedToParameterTransformer)
     {
         $this->addressCountryTransformer = $addressCountryTransformer;
         $this->postalCodeTransformer = $postalCodeTransformer;
@@ -51,8 +67,14 @@ class QueryForm extends AbstractType
         $this->audienceTypeTransformer = $audienceTypeParameterTransformer;
         $this->dateFromTypeTransformer = $dateFromParameterTransformer;
         $this->dateToTypeTransformer = $dateToParameterTransformer;
+        $this->calendarTypeTransformer = $calendarParameterTransformer;
+
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
+        $this->createdFromTypeTransformer = $createdFromParameterTransformer;
+        $this->createdToTypeTransformer = $createdToParameterTransformer;
+        $this->modifiedFromTypeTransformer = $modifiedFromParameterTransformer;
+        $this->modifiedToTypeTransformer = $modifiedToParameterTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -109,28 +131,20 @@ class QueryForm extends AbstractType
                 'label' => 'Calendar Type',
                 'required' => false
             ))
-            ->add('createdFrom', DateTimeType::class, array(
+            ->add('createdFrom', TextType::class, array(
                 'label' => 'Created From',
-                'widget' => 'single_text',
-                'format' => \DateTime::ATOM,
                 'required' => false
             ))
-            ->add('createdTo', DateTimeType::class, array(
+            ->add('createdTo', TextType::class, array(
                 'label' => 'Created To',
-                'widget' => 'single_text',
-                'format' => \DateTime::ATOM,
                 'required' => false
             ))
-            ->add('modifiedFrom', DateTimeType::class, array(
+            ->add('modifiedFrom', TextType::class, array(
                 'label' => 'Modified From',
-                'widget' => 'single_text',
-                'format' => \DateTime::ATOM,
                 'required' => false
             ))
-            ->add('modifiedTo', DateTimeType::class, array(
+            ->add('modifiedTo', TextType::class, array(
                 'label' => 'Modified To',
-                'widget' => 'single_text',
-                'format' => \DateTime::ATOM,
                 'required' => false
             ))
             ->add('creator', TextType::class, array(
@@ -224,8 +238,13 @@ class QueryForm extends AbstractType
         $builder->get('minAge')->addModelTransformer($this->minAgeTransformer);
         $builder->get('maxAge')->addModelTransformer($this->maxAgeTransformer);
         $builder->get('audienceType')->addModelTransformer($this->audienceTypeTransformer);
+        $builder->get('calendarType')->addModelTransformer($this->calendarTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
+        $builder->get('createdFrom')->addModelTransformer($this->createdFromTypeTransformer);
+        $builder->get('createdTo')->addModelTransformer($this->createdToTypeTransformer);
+        $builder->get('modifiedFrom')->addModelTransformer($this->modifiedFromTypeTransformer);
+        $builder->get('modifiedTo')->addModelTransformer($this->modifiedToTypeTransformer);
     }
 }
