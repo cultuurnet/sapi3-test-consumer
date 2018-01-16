@@ -11,13 +11,15 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+use TestConsumer\Form\DataTransformer\DateFromParameterTransformer;
+use TestConsumer\Form\DataTransformer\DateToParameterTransformer;
 use TestConsumer\Form\DataTransformer\AddressCountryParameterTransformer;
 use TestConsumer\Form\DataTransformer\PostalCodeParameterTransformer;
 use TestConsumer\Form\DataTransformer\MinAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\MaxAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\AudienceTypeParameterTransformer;
-use TestConsumer\Form\DataTransformer\DateFromParameterTransformer;
-use TestConsumer\Form\DataTransformer\DateToParameterTransformer;
+use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
+use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
 
 class QueryForm extends AbstractType
 {
@@ -29,13 +31,18 @@ class QueryForm extends AbstractType
     private $dateFromTypeTransformer;
     private $dateToTypeTransformer;
 
+    private $availableFromTypeTransformer;
+    private $availableToTypeTransformer;
+
     public function __construct(AddressCountryParameterTransformer $addressCountryTransformer,
         PostalCodeParameterTransformer $postalCodeTransformer,
         MinAgeParameterTransformer $minAgeParameterTransformer,
         MaxAgeParameterTransformer $maxAgeParameterTransformer,
         AudienceTypeParameterTransformer $audienceTypeParameterTransformer,
         DateFromParameterTransformer $dateFromParameterTransformer,
-        DateToParameterTransformer $dateToParameterTransformer)
+        DateToParameterTransformer $dateToParameterTransformer,
+        AvailableFromParameterTransformer $availableFromParameterTransformer,
+        AvailableToParameterTransformer $availableToParameterTransformer)
     {
         $this->addressCountryTransformer = $addressCountryTransformer;
         $this->postalCodeTransformer = $postalCodeTransformer;
@@ -44,6 +51,8 @@ class QueryForm extends AbstractType
         $this->audienceTypeTransformer = $audienceTypeParameterTransformer;
         $this->dateFromTypeTransformer = $dateFromParameterTransformer;
         $this->dateToTypeTransformer = $dateToParameterTransformer;
+        $this->availableFromTypeTransformer = $availableFromParameterTransformer;
+        $this->availableToTypeTransformer = $availableToParameterTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -82,16 +91,12 @@ class QueryForm extends AbstractType
                 'label' => 'Audience Type',
                 'required' => false
             ))
-            ->add('availableFrom', DateTimeType::class, array(
+            ->add('availableFrom', TextType::class, array(
                 'label' => 'Available From',
-                'widget' => 'single_text',
-                'format' => \DateTime::ATOM,
                 'required' => false
             ))
-            ->add('availableTo', DateTimeType::class, array(
+            ->add('availableTo', TextType::class, array(
                 'label' => 'Available To',
-                'widget' => 'single_text',
-                'format' => \DateTime::ATOM,
                 'required' => false
             ))
             ->add('calendarType', ChoiceType::class, array(
@@ -219,5 +224,8 @@ class QueryForm extends AbstractType
         $builder->get('minAge')->addModelTransformer($this->minAgeTransformer);
         $builder->get('maxAge')->addModelTransformer($this->maxAgeTransformer);
         $builder->get('audienceType')->addModelTransformer($this->audienceTypeTransformer);
+
+        $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
+        $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
     }
 }
