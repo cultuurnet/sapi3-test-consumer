@@ -15,6 +15,7 @@ use TestConsumer\Form\DataTransformer\AddressCountryParameterTransformer;
 use TestConsumer\Form\DataTransformer\PostalCodeParameterTransformer;
 use TestConsumer\Form\DataTransformer\MinAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\MaxAgeParameterTransformer;
+use TestConsumer\Form\DataTransformer\AudienceTypeParameterTransformer;
 
 class QueryForm extends AbstractType
 {
@@ -22,16 +23,19 @@ class QueryForm extends AbstractType
     private $postalCodeTransformer;
     private $minAgeTransformer;
     private $maxAgeTransformer;
+    private $audienceTypeTransformer;
 
     public function __construct(AddressCountryParameterTransformer $addressCountryTransformer,
         PostalCodeParameterTransformer $postalCodeTransformer,
         MinAgeParameterTransformer $minAgeParameterTransformer,
-        MaxAgeParameterTransformer $maxAgeParameterTransformer)
+        MaxAgeParameterTransformer $maxAgeParameterTransformer,
+        AudienceTypeParameterTransformer $audienceTypeParameterTransformer)
     {
         $this->addressCountryTransformer = $addressCountryTransformer;
         $this->postalCodeTransformer = $postalCodeTransformer;
         $this->minAgeTransformer = $minAgeParameterTransformer;
         $this->maxAgeTransformer = $maxAgeParameterTransformer;
+        $this->audienceTypeTransformer = $audienceTypeParameterTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -41,13 +45,19 @@ class QueryForm extends AbstractType
                 'label' => 'Date From',
                 'widget' => 'single_text',
                 'format' => \DateTime::ATOM,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'js-datepicker'
+                ]
             ))
             ->add('dateTo', DateTimeType::class, array(
                 'label' => 'Date To',
                 'widget' => 'single_text',
                 'format' => \DateTime::ATOM,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'js-datepicker'
+                ]
             ))
             ->add('addressCountry', TextType::class, array(
                 'label' => 'Address Country',
@@ -57,14 +67,12 @@ class QueryForm extends AbstractType
                 'label' => 'Postal Code',
                 'required' => false
             ))
-            ->add('minAge', NumberType::class, array(
+            ->add('minAge', TextType::class, array(
                 'label' => 'Min Age',
-                'scale' => 0,
                 'required' => false
             ))
-            ->add('maxAge', NumberType::class, array(
+            ->add('maxAge', TextType::class, array(
                 'label' => 'Max Age',
-                'scale' => 0,
                 'required' => false
             ))
             ->add('audienceType', ChoiceType::class, array(
@@ -211,5 +219,6 @@ class QueryForm extends AbstractType
         $builder->get('postalCode')->addModelTransformer($this->postalCodeTransformer);
         $builder->get('minAge')->addModelTransformer($this->minAgeTransformer);
         $builder->get('maxAge')->addModelTransformer($this->maxAgeTransformer);
+        $builder->get('audienceType')->addModelTransformer($this->audienceTypeTransformer);
     }
 }

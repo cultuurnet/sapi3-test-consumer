@@ -5,6 +5,7 @@
 /var/
 /vendor/
 /node_modules/
+bower_components/
 ###< symfony/framework-bundle ###
 
 ###> symfony/web-server-bundle ###
