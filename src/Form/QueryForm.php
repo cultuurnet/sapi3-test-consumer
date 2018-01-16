@@ -16,6 +16,8 @@ use TestConsumer\Form\DataTransformer\PostalCodeParameterTransformer;
 use TestConsumer\Form\DataTransformer\MinAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\MaxAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\AudienceTypeParameterTransformer;
+use TestConsumer\Form\DataTransformer\DateFromParameterTransformer;
+use TestConsumer\Form\DataTransformer\DateToParameterTransformer;
 
 class QueryForm extends AbstractType
 {
@@ -24,40 +26,36 @@ class QueryForm extends AbstractType
     private $minAgeTransformer;
     private $maxAgeTransformer;
     private $audienceTypeTransformer;
+    private $dateFromTypeTransformer;
+    private $dateToTypeTransformer;
 
     public function __construct(AddressCountryParameterTransformer $addressCountryTransformer,
         PostalCodeParameterTransformer $postalCodeTransformer,
         MinAgeParameterTransformer $minAgeParameterTransformer,
         MaxAgeParameterTransformer $maxAgeParameterTransformer,
-        AudienceTypeParameterTransformer $audienceTypeParameterTransformer)
+        AudienceTypeParameterTransformer $audienceTypeParameterTransformer,
+        DateFromParameterTransformer $dateFromParameterTransformer,
+        DateToParameterTransformer $dateToParameterTransformer)
     {
         $this->addressCountryTransformer = $addressCountryTransformer;
         $this->postalCodeTransformer = $postalCodeTransformer;
         $this->minAgeTransformer = $minAgeParameterTransformer;
         $this->maxAgeTransformer = $maxAgeParameterTransformer;
         $this->audienceTypeTransformer = $audienceTypeParameterTransformer;
+        $this->dateFromTypeTransformer = $dateFromParameterTransformer;
+        $this->dateToTypeTransformer = $dateToParameterTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dateFrom', DateTimeType::class, array(
+            ->add('dateFrom', TextType::class, array(
                 'label' => 'Date From',
-                'widget' => 'single_text',
-                'format' => \DateTime::ATOM,
                 'required' => false,
-                'attr' => [
-                    'class' => 'js-datepicker'
-                ]
             ))
-            ->add('dateTo', DateTimeType::class, array(
+            ->add('dateTo', TextType::class, array(
                 'label' => 'Date To',
-                'widget' => 'single_text',
-                'format' => \DateTime::ATOM,
                 'required' => false,
-                'attr' => [
-                    'class' => 'js-datepicker'
-                ]
             ))
             ->add('addressCountry', TextType::class, array(
                 'label' => 'Address Country',
@@ -214,7 +212,8 @@ class QueryForm extends AbstractType
             ))
         ;
 
-
+        $builder->get('dateFrom')->addModelTransformer($this->dateFromTypeTransformer);
+        $builder->get('dateTo')->addModelTransformer($this->dateToTypeTransformer);
         $builder->get('addressCountry')->addModelTransformer($this->addressCountryTransformer);
         $builder->get('postalCode')->addModelTransformer($this->postalCodeTransformer);
         $builder->get('minAge')->addModelTransformer($this->minAgeTransformer);

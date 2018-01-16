@@ -17,7 +17,7 @@
     },
     "require-dev": {
         "symfony/dotenv": "^4.0",
-        "cultuurnet/search-v3": "dev-release/guzzle-6"
+        "cultuurnet/search-v3": "dev-master"
     },
     "config": {
         "preferred-install": {

@@ -1,6 +1,5 @@
 {% extends "base.html.twig" %}
 
-{# templates/default/query.html.twig #}
 {% block content %}
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -19,8 +18,17 @@
         </div>
         <div class="panel-body">
             {{ form_start(form) }}
-            {{ form_errors(form) }}
-            {{ form_widget(form) }}
+                {{ form_errors(form) }}
+                <div class="form-group" style="position: relative">
+                    {{ form_label(form.dateFrom) }}
+                    {{ form_widget(form.dateFrom) }}
+                    {{ form_widget(form.dateFrom) }}
+                </div>
+                <div class="form-group" style="position: relative">
+                    {{ form_label(form.dateTo) }}
+                    {{ form_widget(form.dateTo) }}
+                    {{ form_widget(form.dateTo) }}
+                </div>
             {{ form_end(form) }}
         </div>
     </div>
