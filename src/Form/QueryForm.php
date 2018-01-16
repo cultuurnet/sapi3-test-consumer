@@ -10,16 +10,28 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use TestConsumer\Form\DataTransformer\AddressCountryParameterTransformer;
-use TestConsumer\Form\DataTransformer\SearchQueryParameterTransformer;
+use TestConsumer\Form\DataTransformer\PostalCodeParameterTransformer;
+use TestConsumer\Form\DataTransformer\MinAgeParameterTransformer;
+use TestConsumer\Form\DataTransformer\MaxAgeParameterTransformer;
 
 class QueryForm extends AbstractType
 {
     private $addressCountryTransformer;
+    private $postalCodeTransformer;
+    private $minAgeTransformer;
+    private $maxAgeTransformer;
 
-    public function __construct(AddressCountryParameterTransformer $addressCountryTransformer)
+    public function __construct(AddressCountryParameterTransformer $addressCountryTransformer,
+        PostalCodeParameterTransformer $postalCodeTransformer,
+        MinAgeParameterTransformer $minAgeParameterTransformer,
+        MaxAgeParameterTransformer $maxAgeParameterTransformer)
     {
         $this->addressCountryTransformer = $addressCountryTransformer;
+        $this->postalCodeTransformer = $postalCodeTransformer;
+        $this->minAgeTransformer = $minAgeParameterTransformer;
+        $this->maxAgeTransformer = $maxAgeParameterTransformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -194,7 +206,10 @@ class QueryForm extends AbstractType
             ))
         ;
 
-        
+
         $builder->get('addressCountry')->addModelTransformer($this->addressCountryTransformer);
+        $builder->get('postalCode')->addModelTransformer($this->postalCodeTransformer);
+        $builder->get('minAge')->addModelTransformer($this->minAgeTransformer);
+        $builder->get('maxAge')->addModelTransformer($this->maxAgeTransformer);
     }
 }

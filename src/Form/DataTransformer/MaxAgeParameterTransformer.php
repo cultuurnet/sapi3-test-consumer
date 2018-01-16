@@ -2,11 +2,11 @@
 
 namespace TestConsumer\Form\DataTransformer;
 
-use CultuurNet\SearchV3\Parameter\AddressCountry;
+use CultuurNet\SearchV3\Parameter\MaxAge;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use CultuurNet\SearchV3\ParameterInterface;
 
-class AddressCountryParameterTransformer extends SearchQueryParameterTransformer
+class MaxAgeParameterTransformer extends SearchQueryParameterTransformer
 {
 
     /**
@@ -22,11 +22,11 @@ class AddressCountryParameterTransformer extends SearchQueryParameterTransformer
             return;
         }
 
-        $parameter = new AddressCountry($value);
+        $parameter = new MaxAge($value);
 
         if (null === $value) {
             throw new TransformationFailedException(sprintf(
-                'An addressCountry with "%s" does not exist!',
+                'MaxAge "%s" does not exist!',
                 $value
             ));
         }

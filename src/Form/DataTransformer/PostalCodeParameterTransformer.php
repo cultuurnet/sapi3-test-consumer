@@ -2,11 +2,11 @@
 
 namespace TestConsumer\Form\DataTransformer;
 
-use CultuurNet\SearchV3\Parameter\AddressCountry;
+use CultuurNet\SearchV3\Parameter\PostalCode;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use CultuurNet\SearchV3\ParameterInterface;
 
-class AddressCountryParameterTransformer extends SearchQueryParameterTransformer
+class PostalCodeParameterTransformer extends SearchQueryParameterTransformer
 {
 
     /**
@@ -22,11 +22,11 @@ class AddressCountryParameterTransformer extends SearchQueryParameterTransformer
             return;
         }
 
-        $parameter = new AddressCountry($value);
+        $parameter = new PostalCode($value);
 
         if (null === $value) {
             throw new TransformationFailedException(sprintf(
-                'An addressCountry with "%s" does not exist!',
+                'The postalCode "%s" does not exist!',
                 $value
             ));
         }
