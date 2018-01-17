@@ -7,7 +7,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -19,6 +18,7 @@ use TestConsumer\Form\DataTransformer\MinAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\MaxAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\AudienceTypeParameterTransformer;
 use TestConsumer\Form\DataTransformer\CalendarTypeParameterTransformer;
+use TestConsumer\Form\DataTransformer\CreatorParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -37,6 +37,7 @@ class QueryForm extends AbstractType
     private $dateFromTypeTransformer;
     private $dateToTypeTransformer;
     private $calendarTypeTransformer;
+    private $creatorTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -53,6 +54,7 @@ class QueryForm extends AbstractType
         DateFromParameterTransformer $dateFromParameterTransformer,
         DateToParameterTransformer $dateToParameterTransformer,
         CalendarTypeParameterTransformer $calendarParameterTransformer,
+        CreatorParameterTransformer $creatorParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -68,6 +70,7 @@ class QueryForm extends AbstractType
         $this->dateFromTypeTransformer = $dateFromParameterTransformer;
         $this->dateToTypeTransformer = $dateToParameterTransformer;
         $this->calendarTypeTransformer = $calendarParameterTransformer;
+        $this->creatorTypeTransformer = $creatorParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -239,6 +242,7 @@ class QueryForm extends AbstractType
         $builder->get('maxAge')->addModelTransformer($this->maxAgeTransformer);
         $builder->get('audienceType')->addModelTransformer($this->audienceTypeTransformer);
         $builder->get('calendarType')->addModelTransformer($this->calendarTypeTransformer);
+        $builder->get('creator')->addModelTransformer($this->creatorTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
