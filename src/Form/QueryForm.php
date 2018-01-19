@@ -27,6 +27,7 @@ use TestConsumer\Form\DataTransformer\CoordinatesParameterTransformer;
 use TestConsumer\Form\DataTransformer\DistanceParameterTransformer;
 use TestConsumer\Form\DataTransformer\IdParameterTransformer;
 use TestConsumer\Form\DataTransformer\LocationIdParameterTransformer;
+use TestConsumer\Form\DataTransformer\OrganizerIdParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -51,6 +52,7 @@ class QueryForm extends AbstractType
     private $distanceTypeTransformer;
     private $idTypeTransformer;
     private $locationIdTypeTransformer;
+    private $organizerIdTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -73,6 +75,7 @@ class QueryForm extends AbstractType
         DistanceParameterTransformer $distanceParameterTransformer,
         IdParameterTransformer $idParameterTransformer,
         LocationIdParameterTransformer $locationIdParameterTransformer,
+        OrganizerIdParameterTransformer $organizerIdParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -94,6 +97,7 @@ class QueryForm extends AbstractType
         $this->distanceTypeTransformer = $distanceParameterTransformer;
         $this->idTypeTransformer = $idParameterTransformer;
         $this->locationIdTypeTransformer = $locationIdParameterTransformer;
+        $this->organizerIdTypeTransformer = $organizerIdParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -282,6 +286,7 @@ class QueryForm extends AbstractType
         $builder->get('distance')->addModelTransformer($this->distanceTypeTransformer);
         $builder->get('id')->addModelTransformer($this->idTypeTransformer);
         $builder->get('locationId')->addModelTransformer($this->locationIdTypeTransformer);
+        $builder->get('organizerId')->addModelTransformer($this->organizerIdTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
