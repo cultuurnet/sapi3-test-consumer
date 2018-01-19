@@ -33,6 +33,7 @@ use TestConsumer\Form\DataTransformer\LanguagesParameterTransformer;
 use TestConsumer\Form\DataTransformer\MediaObjectParameterTransformer;
 use TestConsumer\Form\DataTransformer\PriceParameterTransformer;
 use TestConsumer\Form\DataTransformer\MinPriceParameterTransformer;
+use TestConsumer\Form\DataTransformer\MaxPriceParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -63,6 +64,7 @@ class QueryForm extends AbstractType
     private $mediaObjectTypeTransformer;
     private $priceTypeTransformer;
     private $minPriceTypeTransformer;
+    private $maxPriceTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -91,6 +93,7 @@ class QueryForm extends AbstractType
         MediaObjectParameterTransformer $mediaObjectParameterTransformer,
         PriceParameterTransformer $priceParameterTransformer,
         MinPriceParameterTransformer $minPriceParameterTransformer,
+        MaxPriceParameterTransformer $maxPriceParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -118,6 +121,7 @@ class QueryForm extends AbstractType
         $this->mediaObjectTypeTransformer = $mediaObjectParameterTransformer;
         $this->priceTypeTransformer = $priceParameterTransformer;
         $this->minPriceTypeTransformer = $minPriceParameterTransformer;
+        $this->maxPriceTypeTransformer = $maxPriceParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -320,6 +324,7 @@ class QueryForm extends AbstractType
         $builder->get('hasMediaObject')->addModelTransformer($this->mediaObjectTypeTransformer);
         $builder->get('price')->addModelTransformer($this->priceTypeTransformer);
         $builder->get('minPrice')->addModelTransformer($this->minPriceTypeTransformer);
+        $builder->get('maxPrice')->addModelTransformer($this->maxPriceTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);

@@ -2,11 +2,11 @@
 
 namespace TestConsumer\Form\DataTransformer;
 
-use CultuurNet\SearchV3\Parameter\Price;
+use CultuurNet\SearchV3\Parameter\MaxPrice;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use CultuurNet\SearchV3\ParameterInterface;
 
-class PriceParameterTransformer extends SearchQueryParameterTransformer
+class MaxPriceParameterTransformer extends SearchQueryParameterTransformer
 {
     public function transform($parameter) {
         if (null === $parameter) {
@@ -29,11 +29,11 @@ class PriceParameterTransformer extends SearchQueryParameterTransformer
             return;
         }
 
-        $parameter = new Price($value);
+        $parameter = new MaxPrice($value);
 
         if (null === $value) {
             throw new TransformationFailedException(sprintf(
-                'Price "%s" does not exist!',
+                'MaxPrice "%s" does not exist!',
                 $value
             ));
         }

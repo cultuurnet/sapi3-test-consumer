@@ -33,7 +33,7 @@ class MinPriceParameterTransformer extends SearchQueryParameterTransformer
 
         if (null === $value) {
             throw new TransformationFailedException(sprintf(
-                'MinAge "%s" does not exist!',
+                'MinPrice "%s" does not exist!',
                 $value
             ));
         }
