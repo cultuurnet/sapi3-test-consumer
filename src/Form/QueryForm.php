@@ -25,6 +25,7 @@ use TestConsumer\Form\DataTransformer\CreatorParameterTransformer;
 use TestConsumer\Form\DataTransformer\FacetCountsParameterTransformer;
 use TestConsumer\Form\DataTransformer\CoordinatesParameterTransformer;
 use TestConsumer\Form\DataTransformer\DistanceParameterTransformer;
+use TestConsumer\Form\DataTransformer\IdParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -47,6 +48,7 @@ class QueryForm extends AbstractType
     private $facetCountsTypeTransformer;
     private $coordinatesTypeTransformer;
     private $distanceTypeTransformer;
+    private $idTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -67,6 +69,7 @@ class QueryForm extends AbstractType
         FacetCountsParameterTransformer $facetCountsParameterTransformer,
         CoordinatesParameterTransformer $coordinatesParameterTransformer,
         DistanceParameterTransformer $distanceParameterTransformer,
+        IdParameterTransformer $idParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -86,6 +89,7 @@ class QueryForm extends AbstractType
         $this->facetCountsTypeTransformer = $facetCountsParameterTransformer;
         $this->coordinatesTypeTransformer = $coordinatesParameterTransformer;
         $this->distanceTypeTransformer = $distanceParameterTransformer;
+        $this->idTypeTransformer = $idParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -272,6 +276,7 @@ class QueryForm extends AbstractType
         $builder->get('facetCounts')->addModelTransformer($this->facetCountsTypeTransformer);
         $builder->get('coordinates')->addModelTransformer($this->coordinatesTypeTransformer);
         $builder->get('distance')->addModelTransformer($this->distanceTypeTransformer);
+        $builder->get('id')->addModelTransformer($this->idTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
