@@ -2,19 +2,12 @@
 
 namespace TestConsumer\Form\DataTransformer;
 
-use CultuurNet\SearchV3\Parameter\MinAge;
+use CultuurNet\SearchV3\Parameter\Coordinates;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use CultuurNet\SearchV3\ParameterInterface;
 
-class MinAgeParameterTransformer extends SearchQueryParameterTransformer
+class CoordinatesParameterTransformer extends SearchQueryParameterTransformer
 {
-    public function transform($parameter) {
-        if (null === $parameter) {
-            return 0;
-        }
-
-        return $parameter->getValue();
-    }
 
     /**
      * Transform's a string, number or date to a Search Query Parameter
@@ -24,16 +17,16 @@ class MinAgeParameterTransformer extends SearchQueryParameterTransformer
      * @throws TransformationFailedException if object (parameter) is not found.
      */
     public function reverseTransform($value) {
-
+        var_dump($value);
         if (!$value) {
             return;
         }
-
-        $parameter = new MinAge($value);
+        $coords = explode(',', $value);
+        $parameter = new Coordinates($coords[0], $coords[1]);
 
         if (null === $value) {
             throw new TransformationFailedException(sprintf(
-                'MinAge "%s" does not exist!',
+                'The postalCode "%s" does not exist!',
                 $value
             ));
         }

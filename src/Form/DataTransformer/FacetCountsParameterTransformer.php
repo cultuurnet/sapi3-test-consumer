@@ -3,20 +3,20 @@
 namespace TestConsumer\Form\DataTransformer;
 
 use CultuurNet\SearchV3\Parameter\Facet;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use CultuurNet\SearchV3\ParameterInterface;
 
 class FacetCountsParameterTransformer extends SearchQueryParameterTransformer {
 
     public function transform($parameter) {
+        if (null === $parameter) {
+            return array();
+        }
 
         $facets = array();
 
-        if ($parameter !== null) {
-            foreach ($parameter as $facet) {
-                $facets[] = $facet->getValue();
-            }
+        foreach ($parameter as $facet) {
+            $facets[] = $facet->getValue();
         }
 
         return $facets;

@@ -9,6 +9,14 @@ use CultuurNet\SearchV3\ParameterInterface;
 class MaxAgeParameterTransformer extends SearchQueryParameterTransformer
 {
 
+    public function transform($parameter) {
+        if (null === $parameter) {
+            return 0;
+        }
+
+        return $parameter->getValue();
+    }
+
     /**
      * Transform's a string, number or date to a Search Query Parameter
      *
