@@ -29,6 +29,7 @@ use TestConsumer\Form\DataTransformer\IdParameterTransformer;
 use TestConsumer\Form\DataTransformer\LocationIdParameterTransformer;
 use TestConsumer\Form\DataTransformer\OrganizerIdParameterTransformer;
 use TestConsumer\Form\DataTransformer\LabelsParameterTransformer;
+use TestConsumer\Form\DataTransformer\LanguagesParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -55,6 +56,7 @@ class QueryForm extends AbstractType
     private $locationIdTypeTransformer;
     private $organizerIdTypeTransformer;
     private $labelsTypeTransformer;
+    private $languagesTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -79,6 +81,7 @@ class QueryForm extends AbstractType
         LocationIdParameterTransformer $locationIdParameterTransformer,
         OrganizerIdParameterTransformer $organizerIdParameterTransformer,
         LabelsParameterTransformer $labelsParameterTransformer,
+        LanguagesParameterTransformer $languagesParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -102,6 +105,7 @@ class QueryForm extends AbstractType
         $this->locationIdTypeTransformer = $locationIdParameterTransformer;
         $this->organizerIdTypeTransformer = $organizerIdParameterTransformer;
         $this->labelsTypeTransformer = $labelsParameterTransformer;
+        $this->languagesTypeTransformer = $languagesParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -224,9 +228,17 @@ class QueryForm extends AbstractType
                 'label' => 'Labels',
                 'required' => false
             ))
-            ->add('languages', TextareaType::class, array(
+            ->add('languages', ChoiceType::class, array(
+                'choices' => array(
+                    'nl' => 'nl',
+                    'fr' => 'fr',
+                    'en' => 'en',
+                    'de' => 'de'
+                ),
                 'label' => 'Languages',
-                'required' => false
+                'required' => false,
+                'expanded' => true,
+                'multiple' => true
             ))
             ->add('hasMediaObject', CheckboxType::class, array(
                 'label' => 'Has Media Object',
@@ -292,6 +304,7 @@ class QueryForm extends AbstractType
         $builder->get('locationId')->addModelTransformer($this->locationIdTypeTransformer);
         $builder->get('organizerId')->addModelTransformer($this->organizerIdTypeTransformer);
         $builder->get('labels')->addModelTransformer($this->labelsTypeTransformer);
+        $builder->get('languages')->addModelTransformer($this->languagesTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
