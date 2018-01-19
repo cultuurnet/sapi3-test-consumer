@@ -19,6 +19,7 @@ use TestConsumer\Form\DataTransformer\MaxAgeParameterTransformer;
 use TestConsumer\Form\DataTransformer\AudienceTypeParameterTransformer;
 use TestConsumer\Form\DataTransformer\CalendarTypeParameterTransformer;
 use TestConsumer\Form\DataTransformer\CreatorParameterTransformer;
+use TestConsumer\Form\DataTransformer\FacetCountsParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -38,6 +39,7 @@ class QueryForm extends AbstractType
     private $dateToTypeTransformer;
     private $calendarTypeTransformer;
     private $creatorTypeTransformer;
+    private $facetCountsTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -55,6 +57,7 @@ class QueryForm extends AbstractType
         DateToParameterTransformer $dateToParameterTransformer,
         CalendarTypeParameterTransformer $calendarParameterTransformer,
         CreatorParameterTransformer $creatorParameterTransformer,
+        FacetCountsParameterTransformer $facetCountsParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -71,6 +74,7 @@ class QueryForm extends AbstractType
         $this->dateToTypeTransformer = $dateToParameterTransformer;
         $this->calendarTypeTransformer = $calendarParameterTransformer;
         $this->creatorTypeTransformer = $creatorParameterTransformer;
+        $this->facetCountsTypeTransformer = $facetCountsParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -154,9 +158,17 @@ class QueryForm extends AbstractType
                 'label' => 'Creator',
                 'required' => false
             ))
-            ->add('facetCounts', TextareaType::class, array(
+            ->add('facetCounts', ChoiceType::class, array(
+                'choices' => array(
+                    'regions' => 'regions',
+                    'types' => 'types',
+                    'themes' => 'themes',
+                    'facilities' => 'facilities'
+                ),
                 'label' => 'Facets',
-                'required' => false
+                'required' => false,
+                'expanded' => true,
+                'multiple' => true
             ))
             ->add('coordinates', TextType::class, array(
                 'label' => 'Coordinates',
@@ -243,6 +255,7 @@ class QueryForm extends AbstractType
         $builder->get('audienceType')->addModelTransformer($this->audienceTypeTransformer);
         $builder->get('calendarType')->addModelTransformer($this->calendarTypeTransformer);
         $builder->get('creator')->addModelTransformer($this->creatorTypeTransformer);
+        $builder->get('facetCounts')->addModelTransformer($this->facetCountsTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);

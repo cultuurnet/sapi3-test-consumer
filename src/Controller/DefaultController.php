@@ -2,6 +2,7 @@
 
 namespace TestConsumer\Controller;
 
+use CultuurNet\SearchV3\SearchQuery;
 use TestConsumer\Credentials\Credentials;
 use TestConsumer\Form\CredentialsForm;
 use TestConsumer\Form\QueryForm;
@@ -42,6 +43,7 @@ class DefaultController extends Controller
     public function queryForm(Request $request, SessionInterface $session)
     {
         $credentials = $session->get('credentials');
+        //$searchQuery = new SearchQuery();
 
         $form = $this->createForm(QueryForm::class);
         $form->add('send', SubmitType::class, array(
@@ -56,13 +58,13 @@ class DefaultController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $values = $form->getData();
-            var_dump($values);
 
             foreach ($values as $key => $value) {
-                if (!is_null($values)) {
-
+                if (is_null($value)) {
+                    unset($values[$key]);
                 }
             }
+            var_dump($values);
         }
 
         return $this->render('default/query.html.twig', array(
