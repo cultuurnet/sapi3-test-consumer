@@ -10,6 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+
 use TestConsumer\Form\DataTransformer\DateFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\DateToParameterTransformer;
 use TestConsumer\Form\DataTransformer\AddressCountryParameterTransformer;
@@ -21,6 +24,7 @@ use TestConsumer\Form\DataTransformer\CalendarTypeParameterTransformer;
 use TestConsumer\Form\DataTransformer\CreatorParameterTransformer;
 use TestConsumer\Form\DataTransformer\FacetCountsParameterTransformer;
 use TestConsumer\Form\DataTransformer\CoordinatesParameterTransformer;
+use TestConsumer\Form\DataTransformer\DistanceParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -42,6 +46,7 @@ class QueryForm extends AbstractType
     private $creatorTypeTransformer;
     private $facetCountsTypeTransformer;
     private $coordinatesTypeTransformer;
+    private $distanceTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -61,6 +66,7 @@ class QueryForm extends AbstractType
         CreatorParameterTransformer $creatorParameterTransformer,
         FacetCountsParameterTransformer $facetCountsParameterTransformer,
         CoordinatesParameterTransformer $coordinatesParameterTransformer,
+        DistanceParameterTransformer $distanceParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -79,6 +85,7 @@ class QueryForm extends AbstractType
         $this->creatorTypeTransformer = $creatorParameterTransformer;
         $this->facetCountsTypeTransformer = $facetCountsParameterTransformer;
         $this->coordinatesTypeTransformer = $coordinatesParameterTransformer;
+        $this->distanceTypeTransformer = $distanceParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -180,8 +187,9 @@ class QueryForm extends AbstractType
                 'label' => 'Coordinates',
                 'required' => false
             ))
-            ->add('distance', TextType::class, array(
+            ->add('distance', NumberType::class, array(
                 'label' => 'Distance',
+                'scale' => 0,
                 'required' => false
             ))
             ->add('id', TextType::class, array(
@@ -263,6 +271,7 @@ class QueryForm extends AbstractType
         $builder->get('creator')->addModelTransformer($this->creatorTypeTransformer);
         $builder->get('facetCounts')->addModelTransformer($this->facetCountsTypeTransformer);
         $builder->get('coordinates')->addModelTransformer($this->coordinatesTypeTransformer);
+        $builder->get('distance')->addModelTransformer($this->distanceTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
