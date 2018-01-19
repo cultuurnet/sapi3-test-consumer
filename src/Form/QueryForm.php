@@ -31,6 +31,7 @@ use TestConsumer\Form\DataTransformer\OrganizerIdParameterTransformer;
 use TestConsumer\Form\DataTransformer\LabelsParameterTransformer;
 use TestConsumer\Form\DataTransformer\LanguagesParameterTransformer;
 use TestConsumer\Form\DataTransformer\MediaObjectParameterTransformer;
+use TestConsumer\Form\DataTransformer\PriceParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -59,6 +60,7 @@ class QueryForm extends AbstractType
     private $labelsTypeTransformer;
     private $languagesTypeTransformer;
     private $mediaObjectTypeTransformer;
+    private $priceTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -85,6 +87,7 @@ class QueryForm extends AbstractType
         LabelsParameterTransformer $labelsParameterTransformer,
         LanguagesParameterTransformer $languagesParameterTransformer,
         MediaObjectParameterTransformer $mediaObjectParameterTransformer,
+        PriceParameterTransformer $priceParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -110,6 +113,7 @@ class QueryForm extends AbstractType
         $this->labelsTypeTransformer = $labelsParameterTransformer;
         $this->languagesTypeTransformer = $languagesParameterTransformer;
         $this->mediaObjectTypeTransformer = $mediaObjectParameterTransformer;
+        $this->priceTypeTransformer = $priceParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -310,6 +314,7 @@ class QueryForm extends AbstractType
         $builder->get('labels')->addModelTransformer($this->labelsTypeTransformer);
         $builder->get('languages')->addModelTransformer($this->languagesTypeTransformer);
         $builder->get('hasMediaObject')->addModelTransformer($this->mediaObjectTypeTransformer);
+        $builder->get('price')->addModelTransformer($this->priceTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
