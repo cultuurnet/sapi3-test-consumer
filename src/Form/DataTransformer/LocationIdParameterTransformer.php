@@ -2,11 +2,11 @@
 
 namespace TestConsumer\Form\DataTransformer;
 
-use CultuurNet\SearchV3\Parameter\Id;
+use CultuurNet\SearchV3\Parameter\LocationId;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use CultuurNet\SearchV3\ParameterInterface;
 
-class IdParameterTransformer extends SearchQueryParameterTransformer
+class LocationIdParameterTransformer extends SearchQueryParameterTransformer
 {
 
     /**
@@ -22,11 +22,11 @@ class IdParameterTransformer extends SearchQueryParameterTransformer
             return;
         }
 
-        $parameter = new Id($value);
+        $parameter = new LocationId($value);
 
         if (null === $value) {
             throw new TransformationFailedException(sprintf(
-                'The ID "%s" does not exist!',
+                'The locationId "%s" does not exist!',
                 $value
             ));
         }
