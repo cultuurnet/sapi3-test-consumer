@@ -2,6 +2,7 @@
 
 namespace TestConsumer\Form;
 
+use CultuurNet\SearchV3\Parameter\Regions;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -34,6 +35,7 @@ use TestConsumer\Form\DataTransformer\MediaObjectParameterTransformer;
 use TestConsumer\Form\DataTransformer\PriceParameterTransformer;
 use TestConsumer\Form\DataTransformer\MinPriceParameterTransformer;
 use TestConsumer\Form\DataTransformer\MaxPriceParameterTransformer;
+use TestConsumer\Form\DataTransformer\RegionsParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -65,6 +67,7 @@ class QueryForm extends AbstractType
     private $priceTypeTransformer;
     private $minPriceTypeTransformer;
     private $maxPriceTypeTransformer;
+    private $regionsTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -94,6 +97,7 @@ class QueryForm extends AbstractType
         PriceParameterTransformer $priceParameterTransformer,
         MinPriceParameterTransformer $minPriceParameterTransformer,
         MaxPriceParameterTransformer $maxPriceParameterTransformer,
+        RegionsParameterTransformer $regionsParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -122,6 +126,7 @@ class QueryForm extends AbstractType
         $this->priceTypeTransformer = $priceParameterTransformer;
         $this->minPriceTypeTransformer = $minPriceParameterTransformer;
         $this->maxPriceTypeTransformer = $maxPriceParameterTransformer;
+        $this->regionsTypeTransformer = $regionsParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -280,7 +285,10 @@ class QueryForm extends AbstractType
             ))
             ->add('regions', TextType::class, array(
                 'label' => 'Regions',
-                'required' => false
+                'required' => false,
+                'attr' => array(
+                    'data-role' => 'tagsinput'
+                )
             ))
             ->add('termIds', TextType::class, array(
                 'label' => 'Term ID\'s',
@@ -328,6 +336,7 @@ class QueryForm extends AbstractType
         $builder->get('price')->addModelTransformer($this->priceTypeTransformer);
         $builder->get('minPrice')->addModelTransformer($this->minPriceTypeTransformer);
         $builder->get('maxPrice')->addModelTransformer($this->maxPriceTypeTransformer);
+        $builder->get('regions')->addModelTransformer($this->regionsTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
