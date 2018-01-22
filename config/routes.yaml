@@ -9,3 +9,9 @@ search_query:
     controller: TestConsumer\Controller\DefaultController::queryForm
     defaults:
       _format: 'html'
+
+result:
+    path: /result
+    controller: TestConsumer\Controller\DefaultController::queryResult
+    defaults:
+      _format: 'html'
