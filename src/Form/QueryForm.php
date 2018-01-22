@@ -240,9 +240,12 @@ class QueryForm extends AbstractType
                 'label' => 'Organizer ID',
                 'required' => false
             ))
-            ->add('labels', TextareaType::class, array(
+            ->add('labels', TextType::class, array(
                 'label' => 'Labels',
-                'required' => false
+                'required' => false,
+                'attr' => array(
+                    'data-role' => 'tagsinput'
+                ),
             ))
             ->add('languages', ChoiceType::class, array(
                 'choices' => array(
@@ -275,15 +278,15 @@ class QueryForm extends AbstractType
                 'scale' => 2,
                 'required' => false
             ))
-            ->add('regions', TextareaType::class, array(
+            ->add('regions', TextType::class, array(
                 'label' => 'Regions',
                 'required' => false
             ))
-            ->add('termIds', TextareaType::class, array(
+            ->add('termIds', TextType::class, array(
                 'label' => 'Term ID\'s',
                 'required' => false
             ))
-            ->add('termLabels', TextareaType::class, array(
+            ->add('termLabels', TextType::class, array(
                 'label' => 'Term Labels',
                 'required' => false
             ))

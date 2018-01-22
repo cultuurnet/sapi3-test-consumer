@@ -36,7 +36,7 @@ class LabelsParameterTransformer extends SearchQueryParameterTransformer {
         }
 
         $parameter = array();
-        $labels = explode("\n", $value);
+        $labels = explode(",", $value);
         foreach ($labels as $label) {
             $parameter[] = new Labels($label);
         }
