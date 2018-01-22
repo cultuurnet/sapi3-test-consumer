@@ -36,6 +36,7 @@ use TestConsumer\Form\DataTransformer\PriceParameterTransformer;
 use TestConsumer\Form\DataTransformer\MinPriceParameterTransformer;
 use TestConsumer\Form\DataTransformer\MaxPriceParameterTransformer;
 use TestConsumer\Form\DataTransformer\RegionsParameterTransformer;
+use TestConsumer\Form\DataTransformer\TermIdsParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -68,6 +69,7 @@ class QueryForm extends AbstractType
     private $minPriceTypeTransformer;
     private $maxPriceTypeTransformer;
     private $regionsTypeTransformer;
+    private $termIdsTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -98,6 +100,7 @@ class QueryForm extends AbstractType
         MinPriceParameterTransformer $minPriceParameterTransformer,
         MaxPriceParameterTransformer $maxPriceParameterTransformer,
         RegionsParameterTransformer $regionsParameterTransformer,
+        TermIdsParameterTransformer $termIdsParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -127,6 +130,7 @@ class QueryForm extends AbstractType
         $this->minPriceTypeTransformer = $minPriceParameterTransformer;
         $this->maxPriceTypeTransformer = $maxPriceParameterTransformer;
         $this->regionsTypeTransformer = $regionsParameterTransformer;
+        $this->termIdsTypeTransformer = $termIdsParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -292,11 +296,17 @@ class QueryForm extends AbstractType
             ))
             ->add('termIds', TextType::class, array(
                 'label' => 'Term ID\'s',
-                'required' => false
+                'required' => false,
+                'attr' => array(
+                    'data-role' => 'tagsinput'
+                )
             ))
             ->add('termLabels', TextType::class, array(
                 'label' => 'Term Labels',
-                'required' => false
+                'required' => false,
+                'attr' => array(
+                    'data-role' => 'tagsinput'
+                )
             ))
             ->add('uitpas', CheckboxType::class, array(
                 'label' => 'UiTPAS',
@@ -337,6 +347,7 @@ class QueryForm extends AbstractType
         $builder->get('minPrice')->addModelTransformer($this->minPriceTypeTransformer);
         $builder->get('maxPrice')->addModelTransformer($this->maxPriceTypeTransformer);
         $builder->get('regions')->addModelTransformer($this->regionsTypeTransformer);
+        $builder->get('termIds')->addModelTransformer($this->termIdsTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);

@@ -2,24 +2,24 @@
 
 namespace TestConsumer\Form\DataTransformer;
 
-use CultuurNet\SearchV3\Parameter\Regions;
+use CultuurNet\SearchV3\Parameter\TermIds;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use CultuurNet\SearchV3\ParameterInterface;
 
-class RegionsParameterTransformer extends SearchQueryParameterTransformer {
+class TermIdsParameterTransformer extends SearchQueryParameterTransformer {
 
     public function transform($parameter) {
         if (null === $parameter) {
             return array();
         }
 
-        $regions = array();
+        $termIds = array();
 
-        foreach ($parameter as $region) {
-            $regions[] = $region->getValue();
+        foreach ($parameter as $termId) {
+            $termIds[] = $termId->getValue();
         }
 
-        return $regions;
+        return $termIds;
     }
 
     /**
@@ -36,9 +36,9 @@ class RegionsParameterTransformer extends SearchQueryParameterTransformer {
         }
 
         $parameter = array();
-        $regions = explode(",", $value);
-        foreach ($regions as $region) {
-            $parameter[] = new Regions($region);
+        $termIds = explode(",", $value);
+        foreach ($termIds as $termId) {
+            $parameter[] = new TermIds($termId);
         }
 
         if (null === $value) {
