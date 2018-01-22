@@ -38,6 +38,7 @@ use TestConsumer\Form\DataTransformer\MaxPriceParameterTransformer;
 use TestConsumer\Form\DataTransformer\RegionsParameterTransformer;
 use TestConsumer\Form\DataTransformer\TermIdsParameterTransformer;
 use TestConsumer\Form\DataTransformer\TermLabelsParameterTransformer;
+use TestConsumer\Form\DataTransformer\UitpasParameterTransformer;
 
 use TestConsumer\Form\DataTransformer\AvailableFromParameterTransformer;
 use TestConsumer\Form\DataTransformer\AvailableToParameterTransformer;
@@ -72,6 +73,7 @@ class QueryForm extends AbstractType
     private $regionsTypeTransformer;
     private $termIdsTypeTransformer;
     private $termLabelsTypeTransformer;
+    private $uitpasTypeTransformer;
 
     private $availableFromTypeTransformer;
     private $availableToTypeTransformer;
@@ -104,6 +106,7 @@ class QueryForm extends AbstractType
         RegionsParameterTransformer $regionsParameterTransformer,
         TermIdsParameterTransformer $termIdsParameterTransformer,
         TermLabelsParameterTransformer $termLabelsParameterTransformer,
+        UitpasParameterTransformer $uitpasParameterTransformer,
         AvailableFromParameterTransformer $availableFromParameterTransformer,
         AvailableToParameterTransformer $availableToParameterTransformer,
         CreatedFromParameterTransformer $createdFromParameterTransformer,
@@ -135,6 +138,7 @@ class QueryForm extends AbstractType
         $this->regionsTypeTransformer = $regionsParameterTransformer;
         $this->termIdsTypeTransformer = $termIdsParameterTransformer;
         $this->termLabelsTypeTransformer = $termLabelsParameterTransformer;
+        $this->uitpasTypeTransformer = $uitpasParameterTransformer;
 
         $this->availableFromTypeTransformer = $availableFromParameterTransformer;
         $this->availableToTypeTransformer = $availableToParameterTransformer;
@@ -353,6 +357,7 @@ class QueryForm extends AbstractType
         $builder->get('regions')->addModelTransformer($this->regionsTypeTransformer);
         $builder->get('termIds')->addModelTransformer($this->termIdsTypeTransformer);
         $builder->get('termLabels')->addModelTransformer($this->termLabelsTypeTransformer);
+        $builder->get('uitpas')->addModelTransformer($this->uitpasTypeTransformer);
 
         $builder->get('availableFrom')->addModelTransformer($this->availableFromTypeTransformer);
         $builder->get('availableTo')->addModelTransformer($this->availableToTypeTransformer);
