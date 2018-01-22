@@ -83,7 +83,7 @@ class DefaultController extends Controller
             foreach ($searchQueryValues as $parameter) {
                 $searchQuery->addParameter($parameter);
             }
-            $queryString = $searchQuery->__toString();
+            $queryString = str_replace('+', '%2B', $searchQuery->__toString());
             $queryString = $credentials->getEndpoint() . '/offers?apiKey=' . $credentials->getKey() . '&' . $queryString;
 
             $client = new Client([
