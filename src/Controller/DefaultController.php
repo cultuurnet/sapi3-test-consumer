@@ -95,7 +95,20 @@ class DefaultController extends Controller
             ]);
 
             $searchClient = new SearchClient($client, new Serializer());
-            $result = $searchClient->searchOffers($searchQuery);
+
+            try {
+                $executedQuery = $searchClient->searchOffers($searchQuery);
+                $result = [
+                    'success' => true,
+                    'result' => $executedQuery
+                ];
+
+            } catch (\Exception $e) {
+                $result = [
+                    'success' => false,
+                    'result' => $e->getMessage()
+                ];
+            }
 
             $session->set('queryResult', $result);
             $session->set('queryString', $queryString);
@@ -115,10 +128,11 @@ class DefaultController extends Controller
         $queryString = $session->get('queryString');
 
         $serializer = new Serializer();
-        $serializedResult = $serializer->serialize($result);
+        $serializedResult = $serializer->serialize($result['result']);
         $serializedResult = $this->prettyPrint($serializedResult);
 
         return $this->render('default/result.html.twig', array(
+            'success' => $result['success'],
             'result' => $serializedResult,
             'queryString' => $queryString
         ));

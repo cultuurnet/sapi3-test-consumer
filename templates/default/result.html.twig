@@ -2,14 +2,16 @@
 
 {# templates/default/new.html.twig #}
 {% block content %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Query String</h3>
+    {% if (success) %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Query String</h3>
+            </div>
+            <div class="panel-body">
+                {{ queryString }}
+            </div>
         </div>
-        <div class="panel-body">
-            {{ queryString }}
-        </div>
-    </div>
+    {% endif %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Result</h3>
