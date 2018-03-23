@@ -1,0 +1,24 @@
+{
+  "name": "sapi3-testconsumer",
+  "homepage": "https://github.com/cultuurnet/sapi3-test-consumer",
+  "authors": [
+    "Stijn Swaanen <swaanenstijn@gmail.com>"
+  ],
+  "description": "sapi3-testconsumer",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-tagsinput": "^0.8.0",
+    "bootstrap": "^3.3.7",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "jquery": "^2.1.4",
+    "moment": "^2.21.0"
+  }
+}
